@@ -4,19 +4,22 @@ A collection of Retrieval-Augmented Generation (RAG) examples demonstrating adva
 
 ## Overview
 
-This project showcases two powerful RAG enhancement techniques:
+This project showcases four powerful RAG enhancement techniques:
 
 1. **Query Expansion with Multiple Queries** (`expansion_queries.py`) - Generates multiple related questions to improve retrieval coverage
 2. **Query Expansion with Hypothetical Answers** (`expansion_answer.py`) - Creates hypothetical answers to improve semantic similarity matching
+3. **Cross-Encoder Reranking** (`reranking.py`) - Uses cross-encoder models to rerank retrieved documents for better relevance
+4. **DPR with Cross-Encoder** (`dpr_technique.py`) - Combines Dense Passage Retrieval with cross-encoder reranking for optimal results
 
-Both techniques use the Microsoft Annual Report as sample data and visualize results in embedding space using UMAP projections.
+All techniques use the Microsoft Annual Report as sample data, with some including UMAP visualizations of embedding spaces.
 
 ## Features
 
 - 📄 PDF document processing and text extraction
 - 🔧 Advanced text splitting strategies (character-based and token-based)
 - 🔍 ChromaDB vector database for semantic search
-- 🤖 OpenAI GPT integration for query expansion
+- 🤖 OpenAI GPT integration for query expansion and final answer generation
+- 🔄 Cross-encoder reranking for improved document relevance scoring
 - 📊 UMAP visualization of embedding spaces
 - 📈 Interactive matplotlib plots for result analysis
 
@@ -82,6 +85,34 @@ This technique:
 - Combines original query with hypothetical answer
 - Searches using the enriched query
 
+### Cross-Encoder Reranking
+
+Improves retrieval quality by reranking documents using cross-encoder models:
+
+```bash
+python reranking.py
+```
+
+This technique:
+- Retrieves initial documents using standard vector similarity
+- Uses a cross-encoder model to score query-document pairs
+- Reranks documents based on cross-encoder relevance scores
+- Demonstrates improved relevance ordering
+
+### DPR with Cross-Encoder Pipeline
+
+Combines multiple techniques for optimal retrieval performance:
+
+```bash
+python dpr_technique.py
+```
+
+This technique:
+- Implements multi-query expansion for broader retrieval
+- Uses cross-encoder reranking for relevance scoring
+- Deduplicates retrieved documents across multiple queries
+- Generates final answers using top-ranked context
+
 ### Helper Functions
 
 The `helper_utils.py` module provides:
@@ -98,6 +129,8 @@ llm-rag-examples/
 │   └── microsoft-annual-report.pdf    # Sample document
 ├── expansion_queries.py               # Multi-query expansion
 ├── expansion_answer.py               # Hypothetical answer expansion
+├── reranking.py                      # Cross-encoder reranking
+├── dpr_technique.py                  # DPR with cross-encoder pipeline
 ├── helper_utils.py                   # Utility functions
 ├── main.py                          # Basic entry point
 ├── pyproject.toml                   # Project dependencies
@@ -107,13 +140,13 @@ llm-rag-examples/
 ## Dependencies
 
 - **chromadb** - Vector database for embeddings
-- **langchain** - Text splitting and processing
-- **openai** - GPT models for query expansion
+- **langchain** & **langchain-community** - Text splitting and document processing
+- **openai** - GPT models for query expansion and answer generation
 - **pypdf** - PDF text extraction
-- **sentence-transformers** - Embedding generation
+- **sentence-transformers** - Embedding generation and cross-encoder reranking
 - **umap-learn** - Dimensionality reduction for visualization
 - **matplotlib** - Plotting and visualization
-- **python-dotenv** - Environment variable management
+- **pandas** - Data manipulation and analysis
 
 ## Techniques Explained
 
@@ -139,13 +172,37 @@ llm-rag-examples/
 - Improves retrieval of answer-like passages
 - Leverages LLM knowledge for query enrichment
 
+### 3. Cross-Encoder Reranking
+
+**Problem**: Vector similarity doesn't always correlate with semantic relevance.
+
+**Solution**: Use a cross-encoder model to score query-document pairs for better ranking.
+
+**Benefits**:
+- More accurate relevance scoring than bi-encoder similarity
+- Considers interaction between query and document
+- Significantly improves retrieval precision
+
+### 4. Multi-Technique Pipeline
+
+**Problem**: Single techniques may not capture all aspects of effective retrieval.
+
+**Solution**: Combine query expansion, retrieval, reranking, and generation in a pipeline.
+
+**Benefits**:
+- Leverages strengths of multiple approaches
+- Broader retrieval coverage with precise reranking
+- End-to-end answer generation with context
+
 ## Visualization
 
-Both examples include UMAP visualizations showing:
+Query expansion examples include UMAP visualizations showing:
 - 🔘 Gray dots: All document embeddings
 - ❌ Red X: Original query
 - ❌ Orange X: Expanded queries/hypothetical answers
 - 🟢 Green circles: Retrieved documents
+
+Cross-encoder examples focus on relevance scoring and ranking improvements.
 
 ## Customization
 
