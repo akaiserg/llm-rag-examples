@@ -1,0 +1,18 @@
+[project]
+name = "llm-rag-examples"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=1.0.15",
+    "langchain>=0.3.27",
+    "langchain-community>=0.3.27",
+    "matplotlib>=3.10.5",
+    "openai>=1.99.1",
+    "pandas>=2.3.1",
+    "pypdf>=5.9.0",
+    "sentence-transformers>=5.0.0",
+    "umap>=0.1.1",
+    "umap-learn>=0.5.9.post2",
+]
